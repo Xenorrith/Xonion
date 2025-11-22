@@ -1,35 +1,16 @@
-use diesel::prelude::*;
-use crate::schema::{pages, blocks};
+use serde::{Serialize, Deserialize};
 
-#[derive(Queryable, serde::Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Page {
     pub id: i32,
     pub title: String,
-    pub emoji: String,
-    pub created_at: String,
+    pub parent_id: Option<i32>,
 }
 
-#[derive(Insertable, serde::Deserialize)]
-#[diesel(table_name = pages)]
-pub struct NewPage {
-    pub title: String,
-    pub emoji: String,
-}
-
-#[derive(Queryable, serde::Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Block {
     pub id: i32,
     pub page_id: i32,
-    pub block_type: String,
+    pub type_: String,
     pub content: String,
-    pub position: String,
-}
-
-#[derive(Insertable, serde::Deserialize)]
-#[diesel(table_name = blocks)]
-pub struct NewBlock {
-    pub page_id: i32,
-    pub block_type: String,
-    pub content: String,
-    pub position: String,
 }
